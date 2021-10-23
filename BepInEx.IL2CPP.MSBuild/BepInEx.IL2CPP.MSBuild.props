@@ -2,7 +2,7 @@
     <PropertyGroup>
         <TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</TaskFolder>
         <TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</TaskFolder>
-        <TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(TaskFolder)\$(AssemblyName).dll</TaskAssembly>
+        <TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(TaskFolder)\$(MSBuildThisFileName).dll</TaskAssembly>
     </PropertyGroup>
 
     <UsingTask TaskName="UnhollowGameLibsTask" AssemblyFile="$(TaskAssembly)" />
