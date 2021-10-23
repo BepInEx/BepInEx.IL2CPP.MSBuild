@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.IL2CPP.MSBuild", "BepInEx.IL2CPP.MSBuild\BepInEx.IL2CPP.MSBuild.csproj", "{D5DC7DDA-55AC-4B0E-A6F3-061A4284A5FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{2B23738C-B431-488C-B06E-B601A9A1AD11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5DC7DDA-55AC-4B0E-A6F3-061A4284A5FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5DC7DDA-55AC-4B0E-A6F3-061A4284A5FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5DC7DDA-55AC-4B0E-A6F3-061A4284A5FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5DC7DDA-55AC-4B0E-A6F3-061A4284A5FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B23738C-B431-488C-B06E-B601A9A1AD11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B23738C-B431-488C-B06E-B601A9A1AD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B23738C-B431-488C-B06E-B601A9A1AD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B23738C-B431-488C-B06E-B601A9A1AD11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

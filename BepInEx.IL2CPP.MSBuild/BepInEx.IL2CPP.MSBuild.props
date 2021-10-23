@@ -1,0 +1,21 @@
+<Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
+    <PropertyGroup>
+        <TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</TaskFolder>
+        <TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</TaskFolder>
+        <TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(TaskFolder)\$(AssemblyName).dll</TaskAssembly>
+    </PropertyGroup>
+
+    <UsingTask TaskName="UnhollowGameLibsTask" AssemblyFile="$(TaskAssembly)" />
+
+    <Target Name="UnhollowGameLibs" BeforeTargets="ResolveAssemblyReferences">
+        <UnhollowGameLibsTask Reference="@(Reference)" Unhollow="@(Unhollow)">
+            <Output TaskParameter="UnhollowedDlls" ItemName="UnhollowedDlls" />
+        </UnhollowGameLibsTask>
+
+        <ItemGroup>
+            <Reference Include="%(UnhollowedDlls.Identity)">
+                <Private>false</Private>
+            </Reference>
+        </ItemGroup>
+    </Target>
+</Project>

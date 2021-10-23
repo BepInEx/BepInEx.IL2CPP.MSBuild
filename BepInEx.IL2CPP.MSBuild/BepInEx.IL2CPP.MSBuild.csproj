@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
+        <LangVersion>latest</LangVersion>
+        <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+
+        <Version>0.1.0</Version>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/BepInEx/BepInEx.IL2CPP.MSBuild</RepositoryUrl>
+        <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <DevelopmentDependency>true</DevelopmentDependency>
+        <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.11.0" />
+        <PackageReference Include="Il2CppAssemblyUnhollower.Tool" Version="0.4.16" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(TargetFramework) == 'net472'">
+        <Reference Include="System.Net.Http" />
+        <Reference Include="System.IO.Compression" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="$(MSBuildProjectName).props" Pack="true" PackagePath="build" />
+    </ItemGroup>
+</Project>
