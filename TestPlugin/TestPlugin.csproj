@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+    <Import Project=".\dummy\Dummy.GameLibs.props" />
     <Import Project="..\BepInEx.IL2CPP.MSBuild\BepInEx.IL2CPP.MSBuild.props" />
 
     <PropertyGroup>
@@ -11,7 +12,6 @@
         <ProjectReference Include="..\BepInEx.IL2CPP.MSBuild\BepInEx.IL2CPP.MSBuild.csproj" ReferenceOutputAssembly="false" />
 
         <PackageReference Include="BepInEx.AutoPlugin" Version="1.0.0" />
-        <PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-be.424" />
-        <PackageReference Include="AmongUs.GameLibs" Version="2021.6.30-s" />
+        <PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-be.433" />
     </ItemGroup>
 </Project>

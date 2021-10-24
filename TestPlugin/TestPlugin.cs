@@ -8,7 +8,7 @@ namespace TestPlugin
     {
         public override void Load()
         {
-            Log.LogInfo(typeof(PlayerControl));
+            Log.LogInfo(typeof(Il2CppSystem.Object));
         }
     }
 }

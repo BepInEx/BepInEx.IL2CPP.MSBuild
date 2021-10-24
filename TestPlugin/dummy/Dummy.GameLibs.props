@@ -1,0 +1,5 @@
+<Project>
+    <ItemGroup>
+        <Unhollow Include="Dummy.GameLibs" Version="1.0.0" DummyDirectory="$(MSBuildThisFileDirectory)" UnityVersion="2020.3.7" />
+    </ItemGroup>
+</Project>

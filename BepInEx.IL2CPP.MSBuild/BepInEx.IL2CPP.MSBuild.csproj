@@ -12,6 +12,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <DevelopmentDependency>true</DevelopmentDependency>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <NoPackageAnalysis>true</NoPackageAnalysis>
         <DebugType>embedded</DebugType>
     </PropertyGroup>
 
