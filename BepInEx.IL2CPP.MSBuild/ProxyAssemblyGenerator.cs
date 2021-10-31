@@ -7,13 +7,22 @@ using System.Text;
 using System.Threading.Tasks;
 using AssemblyUnhollower;
 using AssemblyUnhollower.MetadataAccess;
+using Microsoft.Build.Framework;
+using Microsoft.Build.Utilities;
 using Mono.Cecil;
 
 namespace BepInEx.IL2CPP.MSBuild
 {
-    public static class ProxyAssemblyGenerator
+    public class ProxyAssemblyGenerator
     {
-        public static async Task<string> GenerateAsync(GameLibsPackage gameLibsPackage, string unhollowerVersion)
+        private readonly TaskLoggingHelper _logger;
+
+        public ProxyAssemblyGenerator(TaskLoggingHelper logger)
+        {
+            _logger = logger;
+        }
+
+        public async Task<string> GenerateAsync(GameLibsPackage gameLibsPackage, string unhollowerVersion)
         {
             var outputDirectory = Path.Combine(Context.CachePath, "game-libs", gameLibsPackage.Id, gameLibsPackage.Version, "unhollowed", unhollowerVersion);
 
@@ -22,8 +31,11 @@ namespace BepInEx.IL2CPP.MSBuild
 
             if (File.Exists(hashPath) && File.ReadAllText(hashPath) == hash)
             {
+                _logger.LogMessage(MessageImportance.High, $"Reused {gameLibsPackage.Id} unhollowed assemblies from cache");
                 return outputDirectory;
             }
+
+            _logger.LogMessage(MessageImportance.High, $"Unhollowing {gameLibsPackage.Id} (version: {gameLibsPackage.Version}, unity version: {gameLibsPackage.UnityVersion}, unhollower version: {unhollowerVersion})");
 
             var sourceFiles = Directory.GetFiles(gameLibsPackage.DummyDirectory, "*.dll");
 

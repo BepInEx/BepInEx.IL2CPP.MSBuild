@@ -57,11 +57,11 @@ namespace BepInEx.IL2CPP.MSBuild
 
             var unhollowedDlls = new List<ITaskItem>();
 
+            var proxyAssemblyGenerator = new ProxyAssemblyGenerator(Log);
+
             foreach (var gameLibsPackage in Unhollow.Select(taskItem => new GameLibsPackage(taskItem)))
             {
-                Log.LogMessage($"Unhollowing {gameLibsPackage.Id}");
-
-                var path = await ProxyAssemblyGenerator.GenerateAsync(gameLibsPackage, unhollowerVersion);
+                var path = await proxyAssemblyGenerator.GenerateAsync(gameLibsPackage, unhollowerVersion);
 
                 foreach (var file in Directory.GetFiles(path, "*.dll"))
                 {
