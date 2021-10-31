@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +13,6 @@ namespace BepInEx.IL2CPP.MSBuild
 {
     public static class ProxyAssemblyGenerator
     {
-        private static readonly HttpClient _httpClient = new();
-
         public static async Task<string> GenerateAsync(GameLibsPackage gameLibsPackage, string unhollowerVersion)
         {
             var outputDirectory = Path.Combine(Context.CachePath, "game-libs", gameLibsPackage.Id, gameLibsPackage.Version, "unhollowed", unhollowerVersion);
@@ -81,11 +78,7 @@ namespace BepInEx.IL2CPP.MSBuild
             var monoVersion = "2021.6.24"; // TODO get this from BepInEx nuget package
 
             var mscorlibPath = Path.Combine(Context.CachePath, "mono", monoVersion, "mscorlib.dll");
-            Directory.GetParent(mscorlibPath)!.Create();
-
-            using var stream = await _httpClient.GetStreamAsync($"https://github.com/BepInEx/mono/releases/download/{monoVersion}/mono-x86.zip");
-            using var zipArchive = new ZipArchive(stream, ZipArchiveMode.Read);
-            zipArchive.GetEntry("mono/Managed/mscorlib.dll").ExtractToFile(mscorlibPath, true);
+            await DownloadUtility.DownloadFileAsync($"https://github.com/BepInEx/mono/releases/download/{monoVersion}/mscorlib.dll", mscorlibPath);
 
             return mscorlibPath;
         }
@@ -95,13 +88,22 @@ namespace BepInEx.IL2CPP.MSBuild
             var unityBaseLibsDirectory = Path.Combine(Context.CachePath, "unity-libs", unityVersion);
 
             Directory.CreateDirectory(unityBaseLibsDirectory);
+
+            var etagPath = Path.Combine(unityBaseLibsDirectory, "etag");
+
+            using var responseMessage = await DownloadUtility.DownloadAsync($"https://unity.bepinex.dev/libraries/{unityVersion}.zip", etagPath);
+
+            if (responseMessage == null)
+            {
+                return unityBaseLibsDirectory;
+            }
+
             foreach (var file in Directory.EnumerateFiles(unityBaseLibsDirectory, "*.dll"))
             {
                 File.Delete(file);
             }
 
-            using var httpClient = new HttpClient();
-            using var zipStream = await httpClient.GetStreamAsync($"https://unity.bepinex.dev/libraries/{unityVersion}.zip");
+            using var zipStream = await responseMessage.Content.ReadAsStreamAsync();
             using var zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Read);
             zipArchive.ExtractToDirectory(unityBaseLibsDirectory);
 
