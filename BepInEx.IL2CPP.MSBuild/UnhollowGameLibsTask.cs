@@ -40,6 +40,8 @@ namespace BepInEx.IL2CPP.MSBuild
                 return false;
             }
 
+            var unhollowerVersion = Reference.Single(x => x.GetMetadata("NuGetPackageId") == "Il2CppAssemblyUnhollower.Tool").GetMetadata("NuGetPackageVersion");
+
             AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
             {
                 var assemblyName = new AssemblyName(args.Name);
@@ -59,7 +61,7 @@ namespace BepInEx.IL2CPP.MSBuild
             {
                 Log.LogMessage($"Unhollowing {gameLibsPackage.Id}");
 
-                var path = await ProxyAssemblyGenerator.GenerateAsync(gameLibsPackage);
+                var path = await ProxyAssemblyGenerator.GenerateAsync(gameLibsPackage, unhollowerVersion);
 
                 foreach (var file in Directory.GetFiles(path, "*.dll"))
                 {

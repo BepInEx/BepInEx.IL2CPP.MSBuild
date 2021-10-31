@@ -16,9 +16,9 @@ namespace BepInEx.IL2CPP.MSBuild
     {
         private static readonly HttpClient _httpClient = new();
 
-        public static async Task<string> GenerateAsync(GameLibsPackage gameLibsPackage)
+        public static async Task<string> GenerateAsync(GameLibsPackage gameLibsPackage, string unhollowerVersion)
         {
-            var outputDirectory = Path.Combine(Context.CachePath, "game-libs", gameLibsPackage.Id, gameLibsPackage.Version, "unhollowed");
+            var outputDirectory = Path.Combine(Context.CachePath, "game-libs", gameLibsPackage.Id, gameLibsPackage.Version, "unhollowed", unhollowerVersion);
 
             var hashPath = Path.Combine(outputDirectory, "hash.txt");
             var hash = ComputeHash(gameLibsPackage.DummyDirectory, gameLibsPackage.UnityVersion);
