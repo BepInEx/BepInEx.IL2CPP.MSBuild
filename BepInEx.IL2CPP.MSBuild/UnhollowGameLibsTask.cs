@@ -28,9 +28,42 @@ namespace BepInEx.IL2CPP.MSBuild
             {
                 var id = reference.GetMetadata("NuGetPackageId");
 
-                if (id is "Il2CppAssemblyUnhollower.Tool" or "Il2CppAssemblyUnhollower.BaseLib" or "Il2CppAssemblyUnhollower.BaseLib.Legacy" or "Mono.Cecil" or "Iced")
+                const string unhollowerTool = "Il2CppAssemblyUnhollower.Tool";
+                const string unhollowerBaseLib = "Il2CppAssemblyUnhollower.BaseLib";
+                const string unhollowerBaseLibLegacy = "Il2CppAssemblyUnhollower.BaseLib.Legacy";
+                const string cecil = "Mono.Cecil";
+                const string iced = "Iced";
+
+                if (id is unhollowerTool or unhollowerBaseLib or unhollowerBaseLibLegacy or cecil or iced)
                 {
-                    assemblies.Add(reference.GetMetadata("Filename"), reference.ItemSpec);
+                    var dllPath = reference.ItemSpec;
+
+#if NET472
+                    // Workaround Visual Studio still using old .net framework for whatever reason. WHY MICROSOFT, WHY?
+                    switch (id)
+                    {
+                        case unhollowerTool:
+                        case unhollowerBaseLib:
+                        case unhollowerBaseLibLegacy:
+                            dllPath = dllPath.Replace("netstandard2.1", "net472");
+                            break;
+
+                        case cecil:
+                            dllPath = dllPath.Replace("netstandard2.0", "net40");
+                            break;
+
+                        case iced:
+                            dllPath = dllPath.Replace("netstandard2.1", "net45").Replace("netstandard2.0", "net45");
+                            break;
+                    }
+
+                    if (id == unhollowerTool)
+                    {
+                        dllPath = dllPath.Replace("AssemblyUnhollower.dll", "AssemblyUnhollower.exe");
+                    }
+#endif
+
+                    assemblies.Add(reference.GetMetadata("Filename"), dllPath);
                 }
             }
 

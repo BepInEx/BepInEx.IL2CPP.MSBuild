@@ -4,7 +4,7 @@
         <LangVersion>latest</LangVersion>
         <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
 
-        <VersionPrefix>1.0.1</VersionPrefix>
+        <VersionPrefix>1.0.2</VersionPrefix>
         <VersionSuffix>dev</VersionSuffix>
 
         <Authors>BepInEx</Authors>

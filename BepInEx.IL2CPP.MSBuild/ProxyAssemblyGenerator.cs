@@ -10,6 +10,7 @@ using AssemblyUnhollower.MetadataAccess;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Mono.Cecil;
+using Task = System.Threading.Tasks.Task;
 
 namespace BepInEx.IL2CPP.MSBuild
 {
@@ -37,8 +38,16 @@ namespace BepInEx.IL2CPP.MSBuild
 
             _logger.LogMessage(MessageImportance.High, $"Unhollowing {gameLibsPackage.Id} (version: {gameLibsPackage.Version}, unity version: {gameLibsPackage.UnityVersion}, unhollower version: {unhollowerVersion})");
 
-            var sourceFiles = Directory.GetFiles(gameLibsPackage.DummyDirectory, "*.dll");
+            await UnhollowAsync(gameLibsPackage, outputDirectory);
 
+            File.WriteAllText(hashPath, hash);
+
+            return outputDirectory;
+        }
+
+        private async Task UnhollowAsync(GameLibsPackage gameLibsPackage, string outputDirectory)
+        {
+            var sourceFiles = Directory.GetFiles(gameLibsPackage.DummyDirectory, "*.dll");
             using var source = new CecilMetadataAccess(sourceFiles);
             Program.Main(new UnhollowerOptions
             {
@@ -48,10 +57,6 @@ namespace BepInEx.IL2CPP.MSBuild
                 UnityBaseLibsDir = await GetUnityLibsAsync(gameLibsPackage.UnityVersion),
                 NoCopyUnhollowerLibs = true
             });
-
-            File.WriteAllText(hashPath, hash);
-
-            return outputDirectory;
         }
 
         private static string ByteArrayToString(IReadOnlyCollection<byte> data)
