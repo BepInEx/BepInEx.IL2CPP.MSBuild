@@ -49,7 +49,7 @@ namespace BepInEx.IL2CPP.MSBuild
         {
             var sourceFiles = Directory.GetFiles(gameLibsPackage.DummyDirectory, "*.dll");
             using var source = new CecilMetadataAccess(sourceFiles);
-            Program.Main(new UnhollowerOptions
+            UnhollowedAssemblyGenerator.GenerateUnhollowedAssemblies(new()
             {
                 MscorlibPath = await GetMscorlibAsync(),
                 Source = (List<AssemblyDefinition>)source.Assemblies,

@@ -28,7 +28,7 @@ namespace BepInEx.IL2CPP.MSBuild
             {
                 var id = reference.GetMetadata("NuGetPackageId");
 
-                const string unhollowerTool = "Il2CppAssemblyUnhollower.Tool";
+                const string unhollowerTool = "Il2CppAssemblyUnhollower.Lib";
                 const string unhollowerBaseLib = "Il2CppAssemblyUnhollower.BaseLib";
                 const string unhollowerBaseLibLegacy = "Il2CppAssemblyUnhollower.BaseLib.Legacy";
                 const string cecil = "Mono.Cecil";
@@ -56,11 +56,6 @@ namespace BepInEx.IL2CPP.MSBuild
                             dllPath = dllPath.Replace("netstandard2.1", "net45").Replace("netstandard2.0", "net45");
                             break;
                     }
-
-                    if (id == unhollowerTool)
-                    {
-                        dllPath = dllPath.Replace("AssemblyUnhollower.dll", "AssemblyUnhollower.exe");
-                    }
 #endif
 
                     assemblies.Add(reference.GetMetadata("Filename"), dllPath);
@@ -73,7 +68,7 @@ namespace BepInEx.IL2CPP.MSBuild
                 return false;
             }
 
-            var unhollowerVersion = Reference.Single(x => x.GetMetadata("NuGetPackageId") == "Il2CppAssemblyUnhollower.Tool").GetMetadata("NuGetPackageVersion");
+            var unhollowerVersion = Reference.Single(x => x.GetMetadata("NuGetPackageId") == "Il2CppAssemblyUnhollower.Lib").GetMetadata("NuGetPackageVersion");
 
             AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
             {

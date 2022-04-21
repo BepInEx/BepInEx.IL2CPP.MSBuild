@@ -12,6 +12,6 @@
         <ProjectReference Include="..\BepInEx.IL2CPP.MSBuild\BepInEx.IL2CPP.MSBuild.csproj" ReferenceOutputAssembly="false" />
 
         <PackageReference Include="BepInEx.AutoPlugin" Version="1.0.0" />
-        <PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-be.437" />
+        <PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-be.*" />
     </ItemGroup>
 </Project>
