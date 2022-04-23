@@ -22,7 +22,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.1.0" />
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.*" />
         <PackageReference Include="Il2CppAssemblyUnhollower.Lib" Version="0.4.31" />
     </ItemGroup>
 
