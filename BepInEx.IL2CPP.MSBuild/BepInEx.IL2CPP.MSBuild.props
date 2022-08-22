@@ -5,12 +5,12 @@
         <TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(TaskFolder)\$(MSBuildThisFileName).dll</TaskAssembly>
     </PropertyGroup>
 
-    <UsingTask TaskName="UnhollowGameLibsTask" AssemblyFile="$(TaskAssembly)" />
+    <UsingTask TaskName="GenerateInteropAssembliesTask" AssemblyFile="$(TaskAssembly)" />
 
-    <Target Name="UnhollowGameLibs" BeforeTargets="ResolveAssemblyReferences">
-        <UnhollowGameLibsTask Reference="@(Reference)" Unhollow="@(Unhollow)">
+    <Target Name="GenerateInteropAssemblies" BeforeTargets="ResolveAssemblyReferences">
+        <GenerateInteropAssembliesTask Reference="@(Reference)" Unhollow="@(Unhollow)">
             <Output TaskParameter="UnhollowedDlls" ItemName="UnhollowedDlls" />
-        </UnhollowGameLibsTask>
+        </GenerateInteropAssembliesTask>
 
         <ItemGroup>
             <Reference Include="%(UnhollowedDlls.Identity)">

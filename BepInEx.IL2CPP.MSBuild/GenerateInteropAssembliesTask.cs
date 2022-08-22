@@ -9,7 +9,7 @@ using Microsoft.Build.Utilities;
 
 namespace BepInEx.IL2CPP.MSBuild
 {
-    public class UnhollowGameLibsTask : AsyncTask
+    public class GenerateInteropAssembliesTask : AsyncTask
     {
         [Required]
         public ITaskItem[] Reference { get; set; }
@@ -28,13 +28,12 @@ namespace BepInEx.IL2CPP.MSBuild
             {
                 var id = reference.GetMetadata("NuGetPackageId");
 
-                const string unhollowerTool = "Il2CppAssemblyUnhollower.Lib";
-                const string unhollowerBaseLib = "Il2CppAssemblyUnhollower.BaseLib";
-                const string unhollowerBaseLibLegacy = "Il2CppAssemblyUnhollower.BaseLib.Legacy";
+                const string common = "Il2CppInterop.Common";
+                const string generator = "Il2CppInterop.Generator";
                 const string cecil = "Mono.Cecil";
                 const string iced = "Iced";
 
-                if (id is unhollowerTool or unhollowerBaseLib or unhollowerBaseLibLegacy or cecil or iced)
+                if (id is common or generator or cecil or iced)
                 {
                     var dllPath = reference.ItemSpec;
 
@@ -42,9 +41,8 @@ namespace BepInEx.IL2CPP.MSBuild
                     // Workaround Visual Studio still using old .net framework for whatever reason. WHY MICROSOFT, WHY?
                     switch (id)
                     {
-                        case unhollowerTool:
-                        case unhollowerBaseLib:
-                        case unhollowerBaseLibLegacy:
+                        case common:
+                        case generator:
                             dllPath = dllPath.Replace("netstandard2.1", "net472");
                             break;
 
@@ -64,11 +62,11 @@ namespace BepInEx.IL2CPP.MSBuild
 
             if (!assemblies.Any())
             {
-                Log.LogError("No Il2CppAssemblyUnhollower found, make sure you referenced BepInEx");
+                Log.LogError("No Il2CppInterop found, make sure you referenced BepInEx");
                 return false;
             }
 
-            var unhollowerVersion = Reference.Single(x => x.GetMetadata("NuGetPackageId") == "Il2CppAssemblyUnhollower.Lib").GetMetadata("NuGetPackageVersion");
+            var il2CppInteropVersion = Reference.Single(x => x.GetMetadata("NuGetPackageId") == "Il2CppInterop.Common").GetMetadata("NuGetPackageVersion");
 
             AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
             {
@@ -85,11 +83,11 @@ namespace BepInEx.IL2CPP.MSBuild
 
             var unhollowedDlls = new List<ITaskItem>();
 
-            var proxyAssemblyGenerator = new ProxyAssemblyGenerator(Log);
+            var proxyAssemblyGenerator = new Il2CppInteropManager(Log);
 
             foreach (var gameLibsPackage in Unhollow.Select(taskItem => new GameLibsPackage(taskItem)))
             {
-                var path = await proxyAssemblyGenerator.GenerateAsync(gameLibsPackage, unhollowerVersion);
+                var path = await proxyAssemblyGenerator.GenerateAsync(gameLibsPackage, il2CppInteropVersion);
 
                 foreach (var file in Directory.GetFiles(path, "*.dll"))
                 {
