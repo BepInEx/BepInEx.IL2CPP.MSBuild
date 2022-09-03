@@ -5,7 +5,7 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <TaskAssembly>$(MSBuildThisFileDirectory)\..\BepInEx.IL2CPP.MSBuild\bin\Debug\netstandard2.1\BepInEx.IL2CPP.MSBuild.dll</TaskAssembly>
+        <_BepInExIL2CPP_TaskAssembly>$(MSBuildThisFileDirectory)\..\BepInEx.IL2CPP.MSBuild\bin\Debug\netstandard2.1\BepInEx.IL2CPP.MSBuild.dll</_BepInExIL2CPP_TaskAssembly>
     </PropertyGroup>
 
     <ItemGroup>

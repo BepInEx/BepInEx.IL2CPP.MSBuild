@@ -1,21 +1,21 @@
-<Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
-    <PropertyGroup>
-        <TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</TaskFolder>
-        <TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</TaskFolder>
-        <TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(TaskFolder)\$(MSBuildThisFileName).dll</TaskAssembly>
-    </PropertyGroup>
+<Project>
+  <PropertyGroup>
+    <_BepInExIL2CPP_TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</_BepInExIL2CPP_TaskFolder>
+    <_BepInExIL2CPP_TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_BepInExIL2CPP_TaskFolder>
+    <_BepInExIL2CPP_TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(_BepInExIL2CPP_TaskFolder)\$(MSBuildThisFileName).dll</_BepInExIL2CPP_TaskAssembly>
+  </PropertyGroup>
 
-    <UsingTask TaskName="GenerateInteropAssembliesTask" AssemblyFile="$(TaskAssembly)" />
+  <UsingTask TaskName="GenerateInteropAssembliesTask" AssemblyFile="$(_BepInExIL2CPP_TaskAssembly)" />
 
-    <Target Name="GenerateInteropAssemblies" BeforeTargets="ResolveAssemblyReferences">
-        <GenerateInteropAssembliesTask Reference="@(Reference)" Unhollow="@(Unhollow)">
-            <Output TaskParameter="UnhollowedDlls" ItemName="UnhollowedDlls" />
-        </GenerateInteropAssembliesTask>
+  <Target Name="GenerateInteropAssemblies" BeforeTargets="ResolveAssemblyReferences">
+    <GenerateInteropAssembliesTask Reference="@(Reference)" Unhollow="@(Unhollow)">
+      <Output TaskParameter="InteropAssemblies" ItemName="_InteropAssemblies" />
+    </GenerateInteropAssembliesTask>
 
-        <ItemGroup>
-            <Reference Include="%(UnhollowedDlls.Identity)">
-                <Private>false</Private>
-            </Reference>
-        </ItemGroup>
-    </Target>
+    <ItemGroup>
+      <Reference Include="%(_InteropAssemblies.Identity)">
+        <Private>false</Private>
+      </Reference>
+    </ItemGroup>
+  </Target>
 </Project>

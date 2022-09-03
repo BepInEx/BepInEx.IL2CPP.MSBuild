@@ -18,7 +18,7 @@ namespace BepInEx.IL2CPP.MSBuild
         public ITaskItem[] Unhollow { get; set; }
 
         [Output]
-        public ITaskItem[] UnhollowedDlls { get; set; }
+        public ITaskItem[] InteropAssemblies { get; set; }
 
         public override async Task<bool> ExecuteAsync()
         {
@@ -81,7 +81,7 @@ namespace BepInEx.IL2CPP.MSBuild
                 return null;
             };
 
-            var unhollowedDlls = new List<ITaskItem>();
+            var interopAssemblies = new List<ITaskItem>();
 
             var proxyAssemblyGenerator = new Il2CppInteropManager(Log);
 
@@ -99,11 +99,11 @@ namespace BepInEx.IL2CPP.MSBuild
                     var taskItem = new TaskItem(file);
                     taskItem.SetMetadata("PackageId", gameLibsPackage.Id);
 
-                    unhollowedDlls.Add(taskItem);
+                    interopAssemblies.Add(taskItem);
                 }
             }
 
-            UnhollowedDlls = unhollowedDlls.ToArray();
+            InteropAssemblies = interopAssemblies.ToArray();
 
             return true;
         }
