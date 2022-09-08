@@ -57,7 +57,9 @@ namespace BepInEx.IL2CPP.MSBuild
                     OutputDir = outputDirectory,
                     UnityBaseLibsDir = await GetUnityLibsAsync(gameLibsPackage.UnityVersion),
                 })
+#if NETSTANDARD
                 .AddLogger(new TaskLogger(_logger))
+#endif
                 .AddInteropAssemblyGenerator()
                 .Run();
         }

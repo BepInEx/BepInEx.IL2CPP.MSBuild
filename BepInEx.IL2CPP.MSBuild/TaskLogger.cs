@@ -1,3 +1,4 @@
+#if NETSTANDARD
 using System;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -40,3 +41,4 @@ public class TaskLogger : ILogger
         throw new NotSupportedException();
     }
 }
+#endif

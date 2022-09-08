@@ -7,15 +7,15 @@
 
   <UsingTask TaskName="GenerateInteropAssembliesTask" AssemblyFile="$(_BepInExIL2CPP_TaskAssembly)" />
 
-  <Target Name="GenerateInteropAssemblies" BeforeTargets="ResolveAssemblyReferences">
-    <GenerateInteropAssembliesTask Reference="@(Reference)" Unhollow="@(Unhollow)">
+  <Target Name="GenerateInteropAssemblies" BeforeTargets="ResolveReferences">
+    <GenerateInteropAssembliesTask Reference="@(ReferencePath)" Unhollow="@(Unhollow)">
       <Output TaskParameter="InteropAssemblies" ItemName="_InteropAssemblies" />
     </GenerateInteropAssembliesTask>
 
     <ItemGroup>
-      <Reference Include="%(_InteropAssemblies.Identity)">
+      <ReferencePath Include="%(_InteropAssemblies.Identity)">
         <Private>false</Private>
-      </Reference>
+      </ReferencePath>
     </ItemGroup>
   </Target>
 </Project>

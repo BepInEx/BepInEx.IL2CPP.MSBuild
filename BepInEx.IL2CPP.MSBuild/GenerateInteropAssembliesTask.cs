@@ -32,8 +32,9 @@ namespace BepInEx.IL2CPP.MSBuild
                 const string generator = "Il2CppInterop.Generator";
                 const string cecil = "Mono.Cecil";
                 const string iced = "Iced";
+                const string logging = "Microsoft.Extensions.Logging.Abstractions";
 
-                if (id is common or generator or cecil or iced)
+                if (id is common or generator or cecil or iced or logging)
                 {
                     var dllPath = reference.ItemSpec;
 
@@ -52,6 +53,10 @@ namespace BepInEx.IL2CPP.MSBuild
 
                         case iced:
                             dllPath = dllPath.Replace("netstandard2.1", "net45").Replace("netstandard2.0", "net45");
+                            break;
+
+                        case logging:
+                            dllPath = dllPath.Replace("net6.0", "net461");
                             break;
                     }
 #endif
