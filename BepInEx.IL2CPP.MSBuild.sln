@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.IL2CPP.MSBuild", "B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "TestPlugin\TestPlugin.csproj", "{2B23738C-B431-488C-B06E-B601A9A1AD11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.IL2CPP.MSBuild.Runner", "BepInEx.IL2CPP.MSBuild.Runner\BepInEx.IL2CPP.MSBuild.Runner.csproj", "{A8870946-1320-4C0E-BFD0-113BBADD1D53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.IL2CPP.MSBuild.Shared", "BepInEx.IL2CPP.MSBuild.Shared\BepInEx.IL2CPP.MSBuild.Shared.csproj", "{45DE5D4D-D903-41D7-A4DE-44F68083D970}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{2B23738C-B431-488C-B06E-B601A9A1AD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B23738C-B431-488C-B06E-B601A9A1AD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B23738C-B431-488C-B06E-B601A9A1AD11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8870946-1320-4C0E-BFD0-113BBADD1D53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8870946-1320-4C0E-BFD0-113BBADD1D53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8870946-1320-4C0E-BFD0-113BBADD1D53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8870946-1320-4C0E-BFD0-113BBADD1D53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45DE5D4D-D903-41D7-A4DE-44F68083D970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45DE5D4D-D903-41D7-A4DE-44F68083D970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45DE5D4D-D903-41D7-A4DE-44F68083D970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45DE5D4D-D903-41D7-A4DE-44F68083D970}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

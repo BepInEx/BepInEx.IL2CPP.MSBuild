@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace BepInEx.IL2CPP.MSBuild
+namespace BepInEx.IL2CPP.MSBuild.Runner
 {
     public static class Context
     {

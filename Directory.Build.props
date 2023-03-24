@@ -1,0 +1,17 @@
+<Project>
+    <PropertyGroup Condition="'$(ProjectName)' != 'TestPlugin'">
+        <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
+        <LangVersion>latest</LangVersion>
+        <Nullable>enable</Nullable>
+        <DebugType>embedded</DebugType>
+
+        <VersionPrefix>2.1.0</VersionPrefix>
+        <VersionSuffix>dev</VersionSuffix>
+
+        <Authors>BepInEx</Authors>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(ProjectName)' != 'TestPlugin'">
+        <PackageReference Include="PolySharp" Version="1.12.1" PrivateAssets="all" />
+    </ItemGroup>
+</Project>

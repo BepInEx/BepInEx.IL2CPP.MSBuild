@@ -1,11 +1,10 @@
-#if NETSTANDARD
 using System;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using Microsoft.Extensions.Logging;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
 
-namespace BepInEx.IL2CPP.MSBuild;
+namespace BepInEx.IL2CPP.MSBuild.Runner;
 
 public class TaskLogger : ILogger
 {
@@ -16,7 +15,7 @@ public class TaskLogger : ILogger
         _logger = logger;
     }
 
-    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         _logger.LogMessage(logLevel switch
         {
@@ -41,4 +40,3 @@ public class TaskLogger : ILogger
         throw new NotSupportedException();
     }
 }
-#endif

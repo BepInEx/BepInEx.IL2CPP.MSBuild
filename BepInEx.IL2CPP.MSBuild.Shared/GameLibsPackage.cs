@@ -1,6 +1,6 @@
 using Microsoft.Build.Framework;
 
-namespace BepInEx.IL2CPP.MSBuild
+namespace BepInEx.IL2CPP.MSBuild.Shared
 {
     public class GameLibsPackage
     {

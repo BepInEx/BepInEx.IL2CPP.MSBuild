@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <Description>The payload assembly executed after dynamically loading Il2CppInterop</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.11.0" />
+        <PackageReference Include="Il2CppInterop.Generator" Version="1.1.0" />
+        <ProjectReference Include="..\BepInEx.IL2CPP.MSBuild.Shared\BepInEx.IL2CPP.MSBuild.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition="$(TargetFramework) == 'net472'">
+        <Reference Include="System.Net.Http" />
+        <Reference Include="System.IO.Compression" />
+    </ItemGroup>
+</Project>

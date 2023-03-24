@@ -5,6 +5,7 @@ using System.IO.Compression;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using BepInEx.IL2CPP.MSBuild.Shared;
 using Il2CppInterop.Common;
 using Il2CppInterop.Generator;
 using Il2CppInterop.Generator.MetadataAccess;
@@ -14,7 +15,7 @@ using Microsoft.Build.Utilities;
 using Mono.Cecil;
 using Task = System.Threading.Tasks.Task;
 
-namespace BepInEx.IL2CPP.MSBuild
+namespace BepInEx.IL2CPP.MSBuild.Runner
 {
     public class Il2CppInteropManager
     {
@@ -57,9 +58,7 @@ namespace BepInEx.IL2CPP.MSBuild
                     OutputDir = outputDirectory,
                     UnityBaseLibsDir = await GetUnityLibsAsync(gameLibsPackage.UnityVersion),
                 })
-#if NETSTANDARD
                 .AddLogger(new TaskLogger(_logger))
-#endif
                 .AddInteropAssemblyGenerator()
                 .Run();
         }

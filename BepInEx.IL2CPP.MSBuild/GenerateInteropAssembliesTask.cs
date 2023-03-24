@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using BepInEx.IL2CPP.MSBuild.Shared;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
@@ -12,13 +13,13 @@ namespace BepInEx.IL2CPP.MSBuild
     public class GenerateInteropAssembliesTask : AsyncTask
     {
         [Required]
-        public ITaskItem[] Reference { get; set; }
+        public required ITaskItem[] Reference { get; set; }
 
         [Required]
-        public ITaskItem[] Unhollow { get; set; }
+        public required ITaskItem[] Unhollow { get; set; }
 
         [Output]
-        public ITaskItem[] InteropAssemblies { get; set; }
+        public ITaskItem[]? InteropAssemblies { get; set; }
 
         public override async Task<bool> ExecuteAsync()
         {
@@ -73,9 +74,17 @@ namespace BepInEx.IL2CPP.MSBuild
 
             var il2CppInteropVersion = Reference.Single(x => x.GetMetadata("NuGetPackageId") == "Il2CppInterop.Common").GetMetadata("NuGetPackageVersion");
 
+            var packagePath = Path.GetDirectoryName(typeof(GenerateInteropAssembliesTask).Assembly.Location) ?? throw new InvalidOperationException();
             AppDomain.CurrentDomain.AssemblyResolve += (_, args) =>
             {
                 var assemblyName = new AssemblyName(args.Name);
+
+                var existingAssembly = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == assemblyName.Name);
+                if (existingAssembly != null)
+                {
+                    Log.LogMessage("Passing " + existingAssembly + " for " + assemblyName);
+                    return existingAssembly;
+                }
 
                 if (assemblies.TryGetValue(assemblyName.Name, out var path))
                 {
@@ -83,12 +92,20 @@ namespace BepInEx.IL2CPP.MSBuild
                     return Assembly.LoadFrom(path);
                 }
 
+                var packagedPath = Path.Combine(packagePath, assemblyName.Name + ".dll");
+                if (File.Exists(packagedPath))
+                {
+                    Log.LogMessage("Loading " + packagedPath);
+                    // LoadFile here is used on purpose as a workaround to avoid double loading BepInEx.IL2CPP.MSBuild.Shared
+                    return Assembly.LoadFile(packagedPath);
+                }
+
                 return null;
             };
 
             var interopAssemblies = new List<ITaskItem>();
 
-            var proxyAssemblyGenerator = new Il2CppInteropManager(Log);
+            var proxyAssemblyGenerator = new Il2CppInteropManagerWrapper(Log);
 
             foreach (var gameLibsPackage in Unhollow.Select(taskItem => new GameLibsPackage(taskItem)))
             {

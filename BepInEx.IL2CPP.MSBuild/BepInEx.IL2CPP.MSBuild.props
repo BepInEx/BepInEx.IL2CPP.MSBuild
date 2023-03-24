@@ -2,7 +2,7 @@
   <PropertyGroup>
     <_BepInExIL2CPP_TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</_BepInExIL2CPP_TaskFolder>
     <_BepInExIL2CPP_TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_BepInExIL2CPP_TaskFolder>
-    <_BepInExIL2CPP_TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(_BepInExIL2CPP_TaskFolder)\$(MSBuildThisFileName).dll</_BepInExIL2CPP_TaskAssembly>
+    <_BepInExIL2CPP_TaskAssembly>$(MSBuildThisFileDirectory)..\tasks\$(_BepInExIL2CPP_TaskFolder)\$(MSBuildThisFileName).dll</_BepInExIL2CPP_TaskAssembly>
   </PropertyGroup>
 
   <UsingTask TaskName="GenerateInteropAssembliesTask" AssemblyFile="$(_BepInExIL2CPP_TaskAssembly)" />

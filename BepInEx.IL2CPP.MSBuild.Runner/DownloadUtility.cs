@@ -3,13 +3,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace BepInEx.IL2CPP.MSBuild
+namespace BepInEx.IL2CPP.MSBuild.Runner
 {
     public static class DownloadUtility
     {
         private static readonly HttpClient _httpClient = new();
 
-        public static async Task<HttpResponseMessage> DownloadAsync(string url, string etagPath, bool includeEtag = true)
+        public static async Task<HttpResponseMessage?> DownloadAsync(string url, string etagPath, bool includeEtag = true)
         {
             using var request = new HttpRequestMessage(HttpMethod.Get, url);
 
