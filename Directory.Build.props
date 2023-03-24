@@ -1,5 +1,5 @@
 <Project>
-    <PropertyGroup Condition="'$(ProjectName)' != 'TestPlugin'">
+    <PropertyGroup Condition="'$(MSBuildProjectName)' != 'TestPlugin'">
         <TargetFrameworks>netstandard2.1;net472</TargetFrameworks>
         <LangVersion>latest</LangVersion>
         <Nullable>enable</Nullable>
@@ -11,7 +11,7 @@
         <Authors>BepInEx</Authors>
     </PropertyGroup>
 
-    <ItemGroup Condition="'$(ProjectName)' != 'TestPlugin'">
+    <ItemGroup Condition="'$(MSBuildProjectName)' != 'TestPlugin'">
         <PackageReference Include="PolySharp" Version="1.12.1" PrivateAssets="all" />
     </ItemGroup>
 </Project>
